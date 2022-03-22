@@ -69,27 +69,31 @@ static int cmd_p(char *args){
 
 static int cmd_help(char *args);
 
-static int cmd_info(char *args){
+static int cmd_info(char* args) {
 	char s;
-	if(args==NULL){
-		  printf("args error in cmd_info\n");
-		  return 0;
-		};
-	int nRet=sscanf(args,"%c",&s);
-	if(nRet<=0){
+	if (args == NULL) {
 		printf("args error in cmd_info\n");
 		return 0;
-		}
-	if(s=='r'){
-		int i;
-		for(i=0;i<8;i++)
-		  printf("%s  0x%x\n",regsl[i],reg_l(i));
-		for(i=0;i<8;i++)
-		  printf("%s  0x%x\n",regsw[i],reg_w(i));
-		for(i=0;i<8;i++)
-		  printf("%s  0x%x\n",regsb[i],reg_b(i));
+	};
+	int nRet = sscanf(args, "%c", &s);
+	if (nRet <= 0) {
+		printf("args error in cmd_info\n");
 		return 0;
-		}
+	}
+	if (s == 'r') {
+		int i;
+		for (i = 0; i < 8; i++)
+			printf("%s  0x%x\n", regsl[i], reg_l(i));
+		for (i = 0; i < 8; i++)
+			printf("%s  0x%x\n", regsw[i], reg_w(i));
+		for (i = 0; i < 8; i++)
+			printf("%s  0x%x\n", regsb[i], reg_b(i));
+		return 0;
+	}
+	if (s == 'w') {
+		print_wp();
+		return 0;
+	}
 	printf("args error in cmd_info\n");
 	return 0;
 }
@@ -110,6 +114,26 @@ static int cmd_si(char *args){
 	return 0;
 }
 
+static int cmd_w(char* args) {
+	new_wp(args);
+	return 0;
+}
+
+static int cmd_d(char* args) {
+	int num = 0;
+	int nRet = sscanf(args, "%d", &num);
+	if (nRet <= 0) {
+		printf("args error in cmd_si\n");
+		return 0;
+	}
+	int r = free_wp(num);
+	if (r == false)
+		printf("error: no watchpoint %d\n", num);
+	else
+		printf("Success delete watchpoint %d\n", num);
+	return 0;
+}
+
 static struct {
   char *name;
   char *description;
@@ -124,8 +148,8 @@ static struct {
   { "info","print reg",cmd_info},
   { "x","scan memory",cmd_x},
   { "p","expr calculate",cmd_p},
-  /* { "w","new a watchpoint",cmd_w},
-  { "d","delete watchpoint",cmd_d},*/
+  { "w","new a watchpoint",cmd_w},
+  { "d","delete watchpoint",cmd_d},
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
