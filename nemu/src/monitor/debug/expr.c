@@ -16,7 +16,7 @@ enum {
   TK_AND,
   TK_OR,
   TK_NEGATIVE,
-  TK_DEREF
+  TK_DEREF,
 
   /* TODO: Add more token types */
 
@@ -36,7 +36,7 @@ static struct rule {
   {"0|[1-9][0-9]*",TK_NUMBER},
   {"\\$(eax|ecx|edx|ebx|esp|ebp|esi|edi|eip|ax|cx|dx|bx|sp|bp|si|di|al|cl|dl|bl|ah|ch|dh|bh)",TK_REG},
 
-  {"==",TK_EQ},  // equal
+  {"==",TK_EQ},
   {"!=",TK_NEQ},
 
   {"&&",TK_AND},
@@ -125,6 +125,7 @@ static bool make_token(char* e) {
 						break;
 						// default: TODO();
 					}
+          printf("Success record : nr_token=%d,str=%s\n",nr_token,tokens[nr_token].type,tokens[nr_token].str);
 					nr_token += 1;
 					break;
 				}
@@ -226,10 +227,10 @@ int findDominantOp(int p, int q)
 int eval(int p, int q)
 {
 	if (p > q) {
-		printf("error:p>=q in check_parentheses\n");
-		return -1;
+		printf("error:p>q in eval,p=%d,q=%d\n", p, q);
+		assert(0);
 	}
-	else if (p == q)
+	if (p == q)
 	{
 		int num;
 		switch (tokens[p].type) {
