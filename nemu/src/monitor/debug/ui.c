@@ -60,9 +60,9 @@ static int cmd_p(char *args){
 	bool success=true;
 	int res=expr(args,&success);
 	if(success==false)
-	printf("error in expr()\n");
+	  printf("error in expr()\n");
 	else
-	printf("the value of expr is:%d\n",res);
+	  printf("the value of expr is:%d\n",res);
 	return 0;
 }
 
