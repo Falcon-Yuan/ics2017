@@ -159,25 +159,31 @@ bool check_parentheses(int p, int q) {
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
+     
     return 0;
-  }
-  if(tokens[0].type=='-')
-	  tokens[0].type=TK_NEGATIVE;
-  if(tokens[0].type=='*')
-	  tokens[0].type=TK_DEREF;
-  for(int i=1;i<nr_token;i++){
-	  if(tokens[i].type=='-'){
-	    if(tokens[i-1].type!=TK_NUMBER&&tokens[i-1].type!=')')
-		    tokens[i].type=TK_NEGATIVE;
-    }
-    if(tokens[i].type=='*'){
-	    if(tokens[i-1].type!=TK_NUMBER&&tokens[i-1].type!=')')
-		    tokens[i].type=TK_DEREF; 
-		}
   }
 
   /* TODO: Insert codes to evaluate the expression. */
+  //TODO();
+  if(tokens[0].type=='-')
+       tokens[0].type=TK_NEGATIVE;
+  if(tokens[0].type=='*')
+       tokens[0].type=TK_DEREF;
+  for(int i=1;i<nr_token;i++){
+          if(tokens[i].type=='-'){
+                if(tokens[i-1].type != TK_NUMBER && tokens[i-1].type!=')')
+                     tokens[i].type=TK_NEGATIVE;
+          }
+          if(tokens[i].type=='*'){
+                 if(tokens[i-1].type != TK_NUMBER && tokens[i-1].type!=')')
+                     tokens[i].type=TK_DEREF;
+
+          }
+  }
+  
+ 
   *success=true;
+  printf("nr_token:%d \n",nr_token);
   return eval(0,nr_token-1);
 }
 
