@@ -83,6 +83,7 @@ static bool make_token(char* e) {
 	int position = 0;
 	int i;
 	regmatch_t pmatch;
+
 	nr_token = 0;
 
 	while (e[position] != '\0') {
@@ -125,17 +126,18 @@ static bool make_token(char* e) {
 						break;
 						// default: TODO();
 					}
-          printf("Success record : nr_token=%d,str=%s\n",nr_token,tokens[nr_token].type,tokens[nr_token].str);
 					nr_token += 1;
 					break;
 				}
 			}
 		}
+
 		if (i == NR_REGEX) {
 			printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
 			return false;
 		}
 	}
+
 	return true;
 }
 
@@ -191,7 +193,7 @@ uint32_t expr(char *e, bool *success) {
 int findDominantOp(int p, int q)
 {
 	int level = 0;
-	int sign[3] = { 1,1,1 };//tar the 
+	int sign[3] = { 1,1,1 };
 	int tar = p + 1;
 	for (int i = p; i <= q; i++) {
 		if (tokens[i].type == '(')
@@ -219,6 +221,7 @@ int findDominantOp(int p, int q)
 				{
 					tar = i;
 				}
+
 		}
 	}
 	return tar;
@@ -227,10 +230,10 @@ int findDominantOp(int p, int q)
 int eval(int p, int q)
 {
 	if (p > q) {
-		printf("error:p>q in eval,p=%d,q=%d\n", p, q);
-	  return -1;
+		printf("error:p>=q in check_parentheses\n");
+		return -1;
 	}
-	if (p == q)
+	else if (p == q)
 	{
 		int num;
 		switch (tokens[p].type) {
@@ -289,6 +292,7 @@ int eval(int p, int q)
 		case TK_NEQ:return val1 != val2;
 		case TK_AND:return val1 && val2;
 		case TK_OR:return val1 || val2;
+
 		default:assert(0);
 		}
 	}
