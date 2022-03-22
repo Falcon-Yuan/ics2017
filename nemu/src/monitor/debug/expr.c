@@ -196,7 +196,7 @@ int findDominantOp(int p, int q)
 {
 	int level = 0;
 	int sign[3] = { 1,1,1 };//tar the 
-	int tar = p + 1;//
+	int tar = p + 1;
 	for (int i = p; i <= q; i++) {
 		if (tokens[i].type == '(')
 			level++;
@@ -232,7 +232,7 @@ int eval(int p, int q)
 {
 	if (p > q) {
 		printf("error:p>q in eval,p=%d,q=%d\n", p, q);
-		assert(0);
+	  return -1;
 	}
 	if (p == q)
 	{
