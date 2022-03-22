@@ -1,5 +1,6 @@
 #include "nemu.h"
 #include<stdlib.h>
+#include <string.h>
 /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
  */
@@ -141,31 +142,22 @@ static bool make_token(char* e) {
 	return true;
 }
 
-bool check_parentheses(int p, int q)
-{
-	if (p >= q) {
-		printf("error:p>=q in check_parentheses\n");
-		return false;
-	}
-	if (tokens[p].type != '(' || tokens[q].type != ')')
-		return false;
+bool check_parentheses(int p, int q) {
+  int i, nums = 0;
 
-	int count = 0;
-	for (int curr = p + 1; curr < q; curr++) {
-		if (tokens[curr].type == '(')
-			count += 1;
-		if (tokens[curr].type == ')') {
-			if (count != 0)
-				count -= 1;
-			else
-				return false;
-		}
-	}
-	if (count == 0)
-		return true;
-	else
-		return false;
+  for (i = p; i <= q; ++i) {
+    if (tokens[i].type == '(') {
+      nums++;
+    }
+    if (tokens[i].type == ')') {
+      nums--;
+    }
+    if(nums == 0 && i < q) {
+      return false;
+    }
+  }
 
+  return true;
 }
 
 uint32_t expr(char *e, bool *success) {
