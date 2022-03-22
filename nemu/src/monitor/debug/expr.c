@@ -226,10 +226,9 @@ int findDominantOp(int p, int q)
 int eval(int p, int q)
 {
 	if (p > q) {
-		printf("error:p>=q in check_parentheses\n");
-		return -1;
+		assert(0);
 	}
-	else if (p == q)
+	if (p == q)
 	{
 		int num;
 		switch (tokens[p].type) {
