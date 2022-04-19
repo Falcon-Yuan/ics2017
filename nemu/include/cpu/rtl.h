@@ -149,8 +149,8 @@ static inline void rtl_push(const rtlreg_t* src1) {
 static inline void rtl_pop(rtlreg_t* dest) {
   // dest <- M[esp]
   // esp <- esp + 4
-  rtl_lm (dest ,& cpu.esp ,4) ;// 读内存
-  rtl_addi (& cpu.esp ,& cpu.esp ,4);// 出栈做加法， 地址变高
+  rtl_lm(dest, &cpu.esp, 4) ;// 读内存
+  rtl_addi(&cpu.esp, &cpu.esp, 4);// 出栈做加法， 地址变高
 }
 
 static inline void rtl_eq0(rtlreg_t* dest, const rtlreg_t* src1) {

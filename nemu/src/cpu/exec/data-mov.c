@@ -6,13 +6,13 @@ make_EHelper(mov) {
 }
 
 make_EHelper(push) {
-  rtl_push (& id_dest -> val);
+  rtl_push(&id_dest->val);
   print_asm_template1(push);
 }
 
 make_EHelper(pop) {
-  rtl_pop (& t1);// 临时寄存器
-  operand_write ( id_dest ,& t1);
+  rtl_pop(&t1);// 临时寄存器
+  operand_write(id_dest,&t1);
   print_asm_template1(pop);
 }
 

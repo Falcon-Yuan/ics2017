@@ -38,7 +38,11 @@ static inline make_DopHelper(SI) {
    *
    op->simm = ???
    */
-  TODO();
+  op->simm = instr_fetch(eip, op->width);// 立即数读取
+  if(op->width==1)
+    op->simm=(int8_t)op->simm;
+  else
+    op->simm=(int32_t)op->simm;// 有符号立即数
 
   rtl_li(&op->val, op->simm);
 

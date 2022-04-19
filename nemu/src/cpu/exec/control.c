@@ -25,7 +25,10 @@ make_EHelper(jmp_rm) {
 
 make_EHelper(call) {
   // the target address is calculated at the decode stage
-  TODO();
+  decoding.is_jmp=1; // 设置跳转标志位
+
+  rtl_li(&t2,decoding.seq_eip);
+  rtl_push(&t2);// eip 入栈， 跳到调用函数地址
 
   print_asm("call %x", decoding.jmp_eip);
 }
