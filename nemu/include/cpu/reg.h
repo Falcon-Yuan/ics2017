@@ -33,6 +33,21 @@ typedef struct {
   };
   vaddr_t eip;
 
+  // 了解位域： https :// www . cnblogs .com / freedesert /p /3431792. html
+  struct BitField {
+      uint32_t CF:1; // ---------------0
+      uint32_t VAL_ONE:1; // 值为1
+      uint32_t :4; // 忽略这四位
+      uint32_t ZF:1; // ---------------6
+      uint32_t SF:1; // -------7
+      uint32_t :1;
+      uint32_t IF:1; // -------9
+      uint32_t :1;
+      uint32_t OF:1; // -----11
+      uint32_t :20;
+
+  } eflags;// EFLAGS 寄存器， 注意是小端模式!!!
+
 } CPU_state;
 
 extern CPU_state cpu;
