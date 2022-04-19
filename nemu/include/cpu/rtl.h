@@ -178,16 +178,16 @@ static inline void rtl_msb(rtlreg_t* dest, const rtlreg_t* src1, int width) {
 
 static inline void rtl_update_ZF(const rtlreg_t* result, int width) {
   // eflags.ZF <- is_zero(result[width * 8 - 1 .. 0])
-  assert(result!=&t0);
-  rtl_andi(&t0,result,(0xffffffffu >> (4-width)*8));
-  rtl_eq0(&t0,&t0);
+  assert(result != &t0);// 临时寄存器t0 的地址不能和result 相同， 否则会改变result
+  rtl_andi(&t0, result, (0xffffffffu >> (4-width)*8));// 取result 的后width 字节
+  rtl_eq0(&t0, &t0);
   rtl_set_ZF(&t0);
 }
 
 static inline void rtl_update_SF(const rtlreg_t* result, int width) {
   // eflags.SF <- is_sign(result[width * 8 - 1 .. 0])
-  assert(result!=&t0);
-  rtl_msb(&t0,result,width);
+  assert(result != &t0);
+  rtl_msb(&t0, result, width);// 使用rtl_msb 函数取result [ width * 8 1 ] 这一位并判断0/1
   rtl_set_SF(&t0);
 }
 
