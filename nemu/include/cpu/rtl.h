@@ -113,10 +113,10 @@ static inline void rtl_sr(int r, int width, const rtlreg_t* src1) {
 
 #define make_rtl_setget_eflags(f) \
   static inline void concat(rtl_set_, f) (const rtlreg_t* src) { \
-    TODO(); \
+    cpu.eflags.f=*src; \
   } \
   static inline void concat(rtl_get_, f) (rtlreg_t* dest) { \
-    TODO(); \
+    *dest=cpu.eflags.f; \
   }
 
 make_rtl_setget_eflags(CF)
@@ -178,7 +178,7 @@ static inline void rtl_msb(rtlreg_t* dest, const rtlreg_t* src1, int width) {
 
 static inline void rtl_update_ZF(const rtlreg_t* result, int width) {
   // eflags.ZF <- is_zero(result[width * 8 - 1 .. 0])
-  assert(result != &t0);// 临时寄存器t0 的地址不能和result 相同， 否则会改变result
+  assert(result!=&t0);// 临时寄存器t0 的地址不能和result 相同， 否则会改变result
   rtl_andi(&t0, result, (0xffffffffu >> (4-width)*8));// 取result 的后width 字节
   rtl_eq0(&t0, &t0);
   rtl_set_ZF(&t0);

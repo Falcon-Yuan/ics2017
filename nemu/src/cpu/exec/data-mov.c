@@ -11,8 +11,8 @@ make_EHelper(push) {
 }
 
 make_EHelper(pop) {
-  rtl_pop(&t1);// 临时寄存器
-  operand_write(id_dest,&t1);
+  rtl_pop(&t2);// 临时寄存器
+  operand_write(id_dest,&t2);
   print_asm_template1(pop);
 }
 
