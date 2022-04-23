@@ -85,3 +85,31 @@ make_EHelper(not) {
 
   print_asm_template1(not);
 }
+
+make_EHelper(rol) {
+	  uint32_t flag1,flag2; 
+	  rtl_mv(&flag1,&id_src->val);
+    while(flag1!=0) {
+		  rtl_msb(&flag2,&id_dest->val,id_dest->width);
+		  rtl_shli(&id_dest->val,&id_dest->val,1);
+		  rtl_add(&id_dest->val,&id_dest->val,&flag2);
+		  flag1--;
+	  }  
+    
+	  operand_write(id_dest,&id_dest->val);
+	  rtl_andi(&t0,&id_dest->val,0x1);
+	  rtl_set_CF(&t0);
+    
+	  if(id_src->val==1) {
+		  rtl_get_CF(&t0);
+		  rtl_msb(&flag2,&id_dest->val,id_dest->width);
+		  if(t0!=flag2) {							
+			  rtl_li(&t1,1);					
+			  rtl_set_OF(&t1);					  
+		  }  
+      else {
+        rtl_set_OF(&tzero);
+      }
+    }
+    print_asm_template1(rol);
+}
