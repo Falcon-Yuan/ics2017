@@ -20,15 +20,14 @@ make_EHelper(inc);
 make_EHelper(dec);
 make_EHelper(neg);
 make_EHelper(adc);
+
 make_EHelper(sbb);
 make_EHelper(mul);
-
 make_EHelper(call_rm);
 make_EHelper(leave);
 make_EHelper(cltd);
 make_EHelper(movsx);
 make_EHelper(movzx);
-
 make_EHelper(imul1);
 make_EHelper(imul2);
 make_EHelper(imul3);
