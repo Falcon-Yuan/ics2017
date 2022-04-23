@@ -22,7 +22,6 @@ make_EHelper(neg);
 make_EHelper(adc);
 make_EHelper(cwtl);
 make_EHelper(rol);
-
 make_EHelper(sbb);
 make_EHelper(mul);
 make_EHelper(call_rm);
@@ -43,7 +42,6 @@ make_EHelper(shl);
 make_EHelper(shr);
 make_EHelper(sar);
 make_EHelper(setcc);
-
 make_EHelper(jmp);
 make_EHelper(jmp_rm);
 make_EHelper(jcc);
