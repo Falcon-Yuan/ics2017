@@ -34,5 +34,7 @@ void _draw_sync() {
 }
 
 int _read_key() {
-  return _KEY_NONE;
+  if (inb(0 x64))// 状态寄存器
+	  return inl(0 x60);// 数据寄存器
+	return _KEY_NONE;
 }
