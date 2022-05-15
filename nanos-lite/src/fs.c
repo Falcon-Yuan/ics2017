@@ -64,6 +64,7 @@ int fs_open(const char *pathname, int flags, int mode) {
 			return i;
 		}
 	}
+  Log("pathname:%s\n",pathname);
 	panic("this file not exist!");
 	return -1;
 }
