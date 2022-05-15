@@ -2,6 +2,7 @@
 
 extern void ramdisk_read(void *buf, off_t offset, size_t len);
 extern void ramdisk_write(void *buf, off_t offset, size_t len);
+extern size_t events_read(void *buf, size_t len);
 
 void dispinfo_read(void* buf,off_t offset,size_t len);
 void fb_write(const void *buf, off_t offset, size_t len);
@@ -88,6 +89,9 @@ ssize_t fs_write(int fd,void* buf,size_t len) {
 	if(fd < 3 || fd == FD_DISPINFO) {
     Log("arg invalid: fd < 3 || fd == FD_DISPINFO");
     return 0;
+  }
+  if(fd == FD_EVENTS) {
+    return events_read(buf,len);
   }
   int n = fs_filesz(fd) - get_open_offset(fd);
   if(n > len)
