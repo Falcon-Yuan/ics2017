@@ -21,32 +21,32 @@ typedef struct {
       uint16_t _16;
       uint8_t _8[2];
     } gpr[8];
+    struct {
+      rtlreg_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
+    };
+  };
 
   /* Do NOT change the order of the GPRs' definitions. */
 
   /* In NEMU, rtlreg_t is exactly uint32_t. This makes RTL instructions
    * in PA2 able to directly access these registers.
    */
-    struct{
-      rtlreg_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
-    };
-  };
+  
+
   vaddr_t eip;
-
-  // 了解位域： https :// www . cnblogs .com / freedesert /p /3431792. html
   struct bs {
-      uint32_t CF:1; // ---------------0
-      uint32_t one:1; // 值为1
-      uint32_t :4; // 忽略这四位
-      uint32_t ZF:1; // ---------------6
-      uint32_t SF:1; // -------7
-      uint32_t :1;
-      uint32_t IF:1; // -------9
-      uint32_t :1;
-      uint32_t OF:1; // -----11
-      uint32_t :20;
-
-  } eflags;// EFLAGS 寄存器， 注意是小端模式!!!
+    unsigned int CF:1;
+    unsigned int one:1;
+    unsigned int :4;
+    unsigned int ZF:1;
+    unsigned int SF:1;
+    
+    unsigned int :1;
+    unsigned int IF:1;
+    unsigned int :1;
+    unsigned int OF:1;
+    unsigned int :20;
+  } eflags;
 
 } CPU_state;
 
@@ -76,3 +76,4 @@ static inline const char* reg_name(int index, int width) {
 }
 
 #endif
+
