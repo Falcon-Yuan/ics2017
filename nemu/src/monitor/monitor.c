@@ -83,7 +83,7 @@ static inline void restart() {
   /* Set the initial instruction pointer. */
   cpu.eip = ENTRY_START;
   unsigned int origin = 2;
-  cpu.cs=8;
+  cpu.cs=0x8;
   memcpy(&cpu.eflags,&origin,sizeof(cpu.eflags));
 
 #ifdef DIFF_TEST
