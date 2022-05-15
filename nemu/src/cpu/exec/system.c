@@ -4,8 +4,10 @@ void diff_test_skip_qemu();
 void diff_test_skip_nemu();
 
 make_EHelper(lidt) {
-  TODO();
-
+  rtl_li(&t0,id_dest->addr);
+  rtl_li(&cpu.idtr.limit,vaddr_read(t0,2));
+  rtl_li(&cpu.idtr.base,vaddr_read(t0+2,4));
+  print_asm_template1(lidt);
   print_asm_template1(lidt);
 }
 
