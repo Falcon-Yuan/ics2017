@@ -79,7 +79,6 @@ ssize_t fs_read(int fd, void *buf, size_t len) {
   int n = fs_filesz(fd) - get_open_offset(fd);
   if(n > len)
     n = len;
-  //ramdisk_read(buf,disk_offset(fd)+get_open_offset(fd),n);
   if(fd == FD_DISPINFO)
     dispinfo_read(buf,get_open_offset(fd),n);
   else
