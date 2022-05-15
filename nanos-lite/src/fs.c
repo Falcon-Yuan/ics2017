@@ -3,6 +3,9 @@
 extern void ramdisk_read(void *buf, off_t offset, size_t len);
 extern void ramdisk_write(void *buf, off_t offset, size_t len);
 
+void dispinfo_read(void* buf,off_t offset,size_t len);
+void fb_write(const void *buf, off_t offset, size_t len);
+
 typedef struct {
   char *name;
   size_t size;
@@ -27,6 +30,11 @@ static Finfo file_table[] __attribute__((used)) = {
 
 void init_fs() {
   // TODO: initialize the size of /dev/fb
+  extern void get_screen(int* s_width,int * s_height);
+  int width = 0,height = 0;
+  get_screen(&width,&height);
+  file_table[FD_FB].size = width*height*sizeof(uint32_t);
+  Log("set FD_DB size = %d",file_table[FD_FB].size);
 }
 
 size_t fs_filesz(int fd) {
@@ -67,20 +75,27 @@ ssize_t fs_read(int fd, void *buf, size_t len) {
   int n = fs_filesz(fd) - get_open_offset(fd);
   if(n > len)
     n = len;
-  ramdisk_read(buf,disk_offset(fd)+get_open_offset(fd),n);
+  //ramdisk_read(buf,disk_offset(fd)+get_open_offset(fd),n);
+  if(fd == FD_DISPINFO)
+    dispinfo_read(buf,get_open_offset(fd),n);
+  else
+    ramdisk_read(buf,disk_offset(fd)+get_open_offset(fd),n);
   set_open_offset(fd,get_open_offset(fd)+n);
 	return n;
 }
 ssize_t fs_write(int fd,void* buf,size_t len) {
   assert(fd>=0 && fd<NR_FILES);
-	if(fd < 3) {
-    Log("arg invalid: fd < 3");
+	if(fd < 3 || fd == FD_DISPINFO) {
+    Log("arg invalid: fd < 3 || fd == FD_DISPINFO");
     return 0;
   }
   int n = fs_filesz(fd) - get_open_offset(fd);
   if(n > len)
     n = len;
-  ramdisk_write(buf,disk_offset(fd)+get_open_offset(fd),n);
+  if(fd == FD_FB)
+    fb_write(buf,get_open_offset(fd),n);
+  else
+    ramdisk_write(buf,disk_offset(fd)+get_open_offset(fd),n);
   set_open_offset(fd,get_open_offset(fd)+n);
 	return n;
 }
