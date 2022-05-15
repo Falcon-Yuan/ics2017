@@ -3,10 +3,16 @@
 void diff_test_skip_qemu();
 void diff_test_skip_nemu();
 
+extern void raise_intr(uint8_t NO, vaddr_t ret_addr);
+
 make_EHelper(lidt) {
-  rtl_li(&t0,id_dest->addr);
-  rtl_li(&cpu.idtr.limit,vaddr_read(t0,2));
-  rtl_li(&cpu.idtr.base,vaddr_read(t0+2,4));
+	cpu.idtr.limit = vaddr_read(id_dest->addr, 2);
+	if (decoding.is_operand_size_16) {
+		cpu.idtr.base = vaddr_read(id_dest->addr + 2, 4) & 0x00ffffff;
+	}
+	else {
+		cpu.idtr.base = vaddr_read(id_dest->addr + 2, 4);	
+	}
   print_asm_template1(lidt);
 }
 
