@@ -7,10 +7,11 @@ void raise_intr(uint8_t NO, vaddr_t ret_addr) {
    */
   memcpy(&t1,&cpu.eflags,sizeof(cpu.eflags));
   rtl_li(&t0,t1);
-	rtl_push(&t0);
-	rtl_push(&cpu.cs);
+  rtl_push(&t0);
+  cpu.eflags.IF = 0;
+  rtl_push(&cpu.cs);
   rtl_li(&t0,ret_addr);
-	rtl_push(&t0);
+  rtl_push(&t0);
 
   vaddr_t gate_addr=cpu.idtr.base + NO * sizeof(GateDesc);
   assert(gate_addr <= cpu.idtr.base + cpu.idtr.limit);
@@ -24,4 +25,5 @@ void raise_intr(uint8_t NO, vaddr_t ret_addr) {
 }
 
 void dev_raise_intr() {
+	cpu.INTR = true;
 }
