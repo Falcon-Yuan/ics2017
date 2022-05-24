@@ -84,6 +84,7 @@ static inline void restart() {
   cpu.eip = ENTRY_START;
   unsigned int origin = 2;
   cpu.cs=0x8;
+  cpu.cr0 = 0x60000011;
   memcpy(&cpu.eflags,&origin,sizeof(cpu.eflags));
 
 #ifdef DIFF_TEST

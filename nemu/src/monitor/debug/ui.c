@@ -123,6 +123,7 @@ static int cmd_info(char *args) {
     printf("esi:  0x%08x\t| si:  0x%08x\t| dh:  0x%08x\n", reg_l(R_ESI), reg_w(R_SI),reg_b(R_DH));
     printf("edi:  0x%08x\t| di:  0x%08x\t| bh:  0x%08x\n", reg_l(R_EDI), reg_w(R_DI),reg_b(R_BH));
     printf("eip:  0x%08x\n", cpu.eip);
+    printf("cr0=0x%x,cr3=0x%x\n",cpu.cr0,cpu.cr3);
   }
   else if(strcmp(args,"w") == 0) {
     show_wp();
