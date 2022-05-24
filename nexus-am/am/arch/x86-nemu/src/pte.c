@@ -66,6 +66,22 @@ void _switch(_Protect *p) {
 }
 
 void _map(_Protect *p, void *va, void *pa) {
+  if(OFF(va) || OFF(pa)) {
+    
+  }
+
+  PDE *pgdir = (PDE*)p->ptr;
+  PTE *pgtab = NULL;
+
+  PDE *pde = pgdir + PDX(va);
+  if(!(*pde & PTE_P)) {
+    pgtab = (PTE*)(palloc_f());
+    *pde = (uintptr_t)pgtab | PTE_P;
+  }
+  pgtab = (PTE*)PTE_ADDR(*pde);
+
+  PTE *pte = pgtab + PTX(va);
+  *pte = (uintptr_t)pa | PTE_P;
 }
 
 void _unmap(_Protect *p, void *va) {
