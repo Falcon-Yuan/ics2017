@@ -249,7 +249,7 @@ void exec_wrapper(bool print_flag) {
 #ifdef DIFF_TEST
   uint32_t eip = cpu.eip;
 #endif
-
+  update_eip();
   if(cpu.INTR & cpu.eflags.IF) {
     cpu.INTR = false;
     raise_intr(TIME_IRQ,cpu.eip);
