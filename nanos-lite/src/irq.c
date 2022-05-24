@@ -4,7 +4,8 @@ extern _RegSet* do_syscall(_RegSet*r);
 static _RegSet* do_event(_Event e, _RegSet* r) {
   switch (e.event) {
     case _EVENT_SYSCALL:
-      return do_syscall(r);
+      do_syscall(r);
+      return schedule(r);
     case _EVENT_TRAP:
       printf("event:self-trapped\n");
       return schedule(r);
