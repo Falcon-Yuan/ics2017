@@ -3,8 +3,6 @@
 
 #define TIME_IRQ 32
 
-extern void raise_intr(uint8_t NO,vaddr_t ret_addr);
-
 typedef struct {
   DHelper decode;
   EHelper execute;
