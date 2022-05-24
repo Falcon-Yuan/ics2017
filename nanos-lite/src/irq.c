@@ -1,5 +1,5 @@
 #include "common.h"
-
+extern _RegSet* schedule(_RegSet* prev);
 extern _RegSet* do_syscall(_RegSet*r);
 static _RegSet* do_event(_Event e, _RegSet* r) {
   switch (e.event) {
@@ -7,7 +7,7 @@ static _RegSet* do_event(_Event e, _RegSet* r) {
       return do_syscall(r);
     case _EVENT_TRAP:
       printf("event:self-trapped\n");
-      return NULL;
+      return schedule(r);
     default: panic("Unhandled event ID = %d", e.event);
   }
 
