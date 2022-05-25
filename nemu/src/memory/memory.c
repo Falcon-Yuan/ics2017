@@ -33,13 +33,13 @@ paddr_t page_translate(vaddr_t addr, bool iswrite) {
     pte.accessed = 1;
     if(iswrite)
       pte.dirty = 1;
-
+    
     paddr_t paddr = PTE_ADDR(pte.val) | OFF(addr);
     //printf("vaddr=0x%08x\tpaddr=0x%08x\n",addr,paddr);
     return paddr;
   }
   return addr;
-} 
+}
 
 /* Memory accessing interfaces */
 
