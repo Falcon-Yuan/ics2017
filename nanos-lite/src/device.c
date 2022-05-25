@@ -11,16 +11,15 @@ static const char *keyname[256] __attribute__((used)) = {
 size_t events_read(void *buf, size_t len) {
   int key = _read_key();
 	bool down = false;
-  if (down && key == _KEY_F12) {
-    extern void switch_current_game();
-    switch_current_game();
-    printf("F12");
-    Log("F12 down : switch current geme!");
-  }
 	if (key & 0x8000) {
 		key ^= 0x8000;
 		down = true;
 	}
+  if (down && key == _KEY_F12) {
+    extern void switch_current_game();
+    switch_current_game();
+    Log("F12 down : switch current geme!");
+  }
 	if (key == _KEY_NONE) {
 		unsigned long t = _uptime();
 		sprintf(buf, "t %d\n", t);
