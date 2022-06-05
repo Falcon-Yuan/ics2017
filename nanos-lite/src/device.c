@@ -14,7 +14,7 @@ size_t events_read(void *buf, size_t len) {
 	if (key & 0x8000) {
 		key ^= 0x8000;
 		down = true;
-    Log("key 0x8000");
+    //Log("key 0x8000");
 	}
   if (down && key == _KEY_F12) {
     extern void switch_current_game();
@@ -24,11 +24,11 @@ size_t events_read(void *buf, size_t len) {
 	if (key == _KEY_NONE) {
 		unsigned long t = _uptime();
 		sprintf(buf, "t %d\n", t);
-    Log("KEY_HOME");
+    //Log("KEY_HOME");
 	}
 	else {
 		sprintf(buf, "%s %s\n", down ? "kd" : "ku", keyname[key]);
-    Log("else");
+    //Log("else");
 	}
 	return strlen(buf);
 }
