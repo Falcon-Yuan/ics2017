@@ -5,12 +5,7 @@
 static PCB pcb[MAX_NR_PROC];
 static int nr_proc = 0;
 PCB *current = NULL;
-
 int current_game = 0;
-void switch_current_game() {
-  current_game = 2-current_game;
-  Log("current_game=%d",current_game);
-}
 
 uintptr_t loader(_Protect *as, const char *filename);
 
@@ -37,7 +32,6 @@ _RegSet* schedule(_RegSet *prev) {
     current->tf = prev;
   else
     current = &pcb[current_game];
-  //current = &pcb[0];
   static int num = 0;
   static const int frequency = 1000;
   if(current == &pcb[current_game])
@@ -51,4 +45,9 @@ _RegSet* schedule(_RegSet *prev) {
   //Log("ptr=0x%x\n",(uint32_t)current->as.ptr);
   _switch(&current->as);
   return current->tf;
+}
+
+void switch_current_game() {
+  current_game = 2-current_game;
+  Log("current_game=%d",current_game);
 }

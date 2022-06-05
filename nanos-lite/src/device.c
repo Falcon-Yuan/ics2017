@@ -18,7 +18,7 @@ size_t events_read(void *buf, size_t len) {
   if (down && key == _KEY_F12) {
     extern void switch_current_game();
     switch_current_game();
-    Log("F12 down : switch current geme!");
+    Log("key down:_KEY_F12,switch current geme!");
   }
 	if (key == _KEY_NONE) {
 		unsigned long t = _uptime();

@@ -1,8 +1,6 @@
 #include "cpu/exec.h"
 #include "all-instr.h"
 
-#define TIME_IRQ 32
-
 typedef struct {
   DHelper decode;
   EHelper execute;
@@ -254,6 +252,8 @@ void exec_wrapper(bool print_flag) {
   difftest_step(eip);
 #endif
 
+//pa4-part3 轮询INTR引脚
+#define TIME_IRQ 32
 	if(cpu.INTR&cpu.eflags.IF){
 		cpu.INTR=false;
 		extern void raise_intr(uint8_t NO,vaddr_t ret_addr);

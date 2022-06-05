@@ -7,6 +7,7 @@ void vecsys();
 void vecnull();
 void vecself();
 void vectime();
+
 _RegSet* irq_handle(_RegSet *tf) {
   _RegSet *next = tf;
   if (H) {
@@ -50,10 +51,10 @@ _RegSet *_make(_Area stack, void *entry, void *arg) {
   return NULL;
 }
 
-void _trap() {
-  asm volatile("int $0x81");
-}
-
 int _istatus(int enable) {
   return 0;
+}
+
+void _trap() {
+  asm volatile("int $0x81");
 }

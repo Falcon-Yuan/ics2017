@@ -57,15 +57,14 @@ void set_open_offset(int fd,off_t n) {
     n = file_table[fd].size;
   file_table[fd].open_offset = n;
 }
-int fs_open(const char *pathname, int flags, int mode) {
-	int i;
-	for (i = 0; i < NR_FILES; i++) {
-		if (strcmp(file_table[i].name, pathname) == 0) {
+int fs_open(const char *filename, int flags, int mode) {
+	for (int i = 0; i < NR_FILES; i++) {
+		if (strcmp(file_table[i].name, filename)==0) {
       set_open_offset(i,0);
 			return i;
 		}
 	}
-  Log("pathname:%s\n",pathname);
+  Log("filename:%s\n",filename);
 	panic("this file not exist!");
 	return -1;
 }

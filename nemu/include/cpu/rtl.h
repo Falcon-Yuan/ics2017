@@ -280,6 +280,7 @@ static inline void rtl_load_cr(rtlreg_t *dest, int r)
   default:
     assert(0);
   }
+  return ;
 }
 static inline void rtl_store_cr(int r, const rtlreg_t *src)
 {
@@ -289,11 +290,12 @@ static inline void rtl_store_cr(int r, const rtlreg_t *src)
     cpu.cr0 = *src;
     return;
   case 3:
-    cpu.cr3 = *src ;
+    cpu.cr3 = *src;
     return;
   default:
     assert(0);
   }
+  return ;
 }
 
 #endif
