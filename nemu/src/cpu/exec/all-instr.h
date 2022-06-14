@@ -56,3 +56,5 @@ make_EHelper(test);
 make_EHelper(rol);
 make_EHelper(in);
 make_EHelper(out);
+make_EHelper(shrd);
+make_EHelper(shld); 
